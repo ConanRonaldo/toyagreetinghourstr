@@ -52,5 +52,31 @@ greeting('2100')             | Good evening!          | 14
 
 def greeting(hour_str):
   # hint convert to 24h-format -> do greet
-  pass#TODO
+  import re
+  if hour_str is None:
+    return ''
+  if hour_str.upper().find('PM') == -1 and hour_str.upper().find('AM') == -1:
+    if hour_str.upper().find(':') != -1:
+      x = int(hour_str.strip().split(':')[0])
+    else:
+      x = int(hour_str.strip()[:2])
+    if 0 <= x < 12:
+      return 'Good morning!'
+    if 12 <= x < 18:
+      return 'Good afternoon!'
+    else:
+      return 'Good evening!'
+  x = re.findall(r'(.+?)[ ]?(AM|PM)', hour_str, flags=re.IGNORECASE)
+  if hour_str.upper().find('PM') > 0:
+    hour = int(x[0][0][:2]) + 12
+  else:
+    hour = int(x[0][0][:2])
+  if hour == 0:
+    return '0'
+  elif 0 <= hour < 12:
+    return 'Good morning!'
+  elif 12 <= hour < 18:
+    return 'Good afternoon!'
+  else:
+    return 'Good evening!'
 #endregion bailam
